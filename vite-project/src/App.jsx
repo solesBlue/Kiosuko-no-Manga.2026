@@ -1,27 +1,31 @@
-import { useState } from 'react'
+import React,{ useState } from 'react'
 import './App.css'
-import { BrowserRouter as Router} from "react-router-dom";
-import { Routes, Route,  } from 'react-router-dom'
 import Navbar from './pages/Navbar.jsx'
 import Inicio from './pages/Inicio'
-import Producto from './pages/Productos.jsx'
 import Footer from './pages/Footer.jsx'
 import Contacto from './pages/Contacto.jsx'
 import Productos from './pages/Productos.jsx';
-import DetalleProducto from './pages/DetalleProductos.jsx';
+import ProductoDetalle from './pages/DetalleProductos.jsx';
+import { Routes, Route } from 'react-router-dom'
+import { AppProvider } from './context/AppContext'
+
 
 function App() {
+  
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<Inicio />} />
-        <Route path='/productos' element={<Productos/>} />
-        <Route path='/productos/:id' element={<DetalleProducto />} />
-        <Route path='/contacto' element={<Contacto/>} />
-      </Routes>
-      <Footer />
-    </>
+    <AppProvider>
+      <>  
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Inicio />} />
+          <Route path='/productos' element={<Productos/>} />
+          <Route path='/productos/:id' element={<ProductoDetalle />} />
+          <Route path='/productos/:categoria/:id' element={<ProductoDetalle/>} />
+          <Route path='/contacto' element={<Contacto/>} />
+        </Routes>
+        <Footer />
+      </>  
+      </AppProvider>
   )
 }
 export default App

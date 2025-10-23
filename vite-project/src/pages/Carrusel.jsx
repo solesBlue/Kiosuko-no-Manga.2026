@@ -31,8 +31,8 @@ export default function Carousel() {
         style={{ width: "100%", height: "auto" , marginTop: "20px"  }}
       />
       {/* <button onClick={prevSlide}>{"<"}</button> */}
-      <button onClick={prevSlide}>{<i class="fa-solid fa-backward"></i>}</button>
-      <button onClick={nextSlide}>{<i class="fa-solid fa-forward"></i>}</button>  
+      <button onClick={prevSlide}>{<i className="fa-solid fa-backward"></i>}</button>
+      <button onClick={nextSlide}>{<i className="fa-solid fa-forward"></i>}</button>  
     </div>
   );
 }
