@@ -1,30 +1,60 @@
-import React,{ useState } from 'react'
 import './App.css'
-import Navbar from './pages/Navbar.jsx'
+import React,{ useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { AppProvider } from './context/AppContext'
+import Navbar from './components/Navbar.jsx'
 import Inicio from './pages/Inicio'
-import Footer from './pages/Footer.jsx'
+import Footer from './components/Footer.jsx'
 import Contacto from './pages/Contacto.jsx'
 import Productos from './pages/Productos.jsx';
 import ProductoDetalle from './pages/DetalleProductos.jsx';
-import { Routes, Route } from 'react-router-dom'
-import { AppProvider } from './context/AppContext'
+import DetallePromociones from "./pages/DetallePromociones";import notFoundImage from './assets/img/Error404.png'
+import CarritoCompras from './pages/Carrito.jsx'
+import Error404 from './components/Error404.jsx'
+import PromocionesBancarias from "./pages/PromocionesBancarias";
+import Pagar from "./pages/Pagar.jsx"
+import RutasProtegidas from "./pages/RutaProtegida.jsx"
+import IniciarSesion from './pages/IniciarSesion.jsx'
 
 
 function App() {
+
+  //propierties
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [usuario,setUsuario] = useState({nombre:"", email:""});
   
   return (
     <AppProvider>
-      <>  
         <Navbar />
         <Routes>
           <Route path='/' element={<Inicio />} />
           <Route path='/productos' element={<Productos/>} />
           <Route path='/productos/:id' element={<ProductoDetalle />} />
           <Route path='/productos/:categoria/:id' element={<ProductoDetalle/>} />
-          <Route path='/contacto' element={<Contacto/>} />
+          {/* <Route path='/carritocompras' element={<CarritoCompras/>}/> */}
+          <Route path='/contacto' element={<Contacto/>}/>
+          <Route path='/iniciar-sesion' element={<IniciarSesion />}/>
+          <Route path="/pagar" element={<RutasProtegidas> <Pagar/></RutasProtegidas> } />
+          
+          {/* Deja de ir  las propities en el componente, se reemplaza por el AppContext */}
+          {/* <Route path='/iniciar-sesion' element={<IniciarSesion setIsAuthenticated={setIsAuthenticated} setUsuario={setUsuario}/>}/> */}         
+          {/* <Route path="/pagar" element={
+              <RutasProtegidas isAuthenticated={isAuthenticated}>
+                <Pagar
+                  setIsAuthenticated={setIsAuthenticated}
+                  setUsuario={setUsuario}
+                  usuario={usuario}
+                />
+              </RutasProtegidas>
+            } 
+          />*/}
+          <Route path="/promociones" element={<PromocionesBancarias />} />
+          <Route path="/promociones/detalle/:banco/:id" element={<DetallePromociones />} />
+          <Route path="/" element={<PromocionesBancarias />} />
+          <Route path='*' element={<Error404/>} />
         </Routes>
         <Footer />
-      </>  
+        
       </AppProvider>
   )
 }

@@ -1,15 +1,18 @@
 import React from "react";
-import Carousel from "./Carrusel";
+import Carousel from "../components/Carrusel.jsx";
+import PromocionesBancarias from "./PromocionesBancarias";
+import { Link } from "react-router-dom";
+import BannerTienda from "../components/BannerTienda.jsx";  
 
 function Inicio() {
     return(
         <>
-            <main className="mainInicio"> 
-                <h2>Eligí, pagá y recibí tu pedido sin moverte de tu casa.</h2> 
-                <p>Hacé tu compra de lunes a viernes antes de las 12:00 p.m. y recibí tu pedido el mismo día.</p> 
+            <main className="mainInicio">   
+                <BannerTienda/>
+                <PromocionesBancarias />
+                <Carousel />
             </main> 
-            <Carousel />
+            
         </>
     );
-
 }export default Inicio;

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import Swal from 'sweetalert2';
 
 // Crear el contexto
 export const AppContext = createContext();
@@ -14,8 +15,14 @@ export function AppProvider({ children }) {
 
   // Funciones para el carrito
   const agregarAlCarrito = (producto) => {
-    setCarrito([...carrito, producto]);
-  };
+    setCarrito(prev => [...prev, producto]);
+    // alert(`Producto ${producto.name || producto.nombre} agregado al carrito`);
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: `El producto ${producto.name || producto.nombre} ha sido agregado al carrito.`})
+  }
+
 
   const vaciarCarrito = () => {
     setCarrito([]);

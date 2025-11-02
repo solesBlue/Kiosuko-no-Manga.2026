@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useAppContext } from "../context/AppContext.jsx";
 import DetalleModal from './DetalleModal.jsx';
-import Swal from 'sweetalert2';
+import BannerTienda from "../components/BannerTienda.jsx";  
+import CarritoCompras from "./Carrito.jsx";
 
 
 export default function Productos() {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-  const [carrito, setCarrito] = useState([]);
 
-    // estado del modal
+  //Reemplazado por el apptextet
+  // const [carrito, setCarrito] = useState([]);
+
+  const{ agregarAlCarrito} = useAppContext();
+
+  // estado del modal
   const [showModal, setShowModal] = useState(false);
   const [selectedProducto, setSelectedProducto] = useState(null);
 
@@ -29,14 +34,14 @@ export default function Productos() {
       });
   }, []);
 
-  const agregarAlCarrito = (producto) => {
-    setCarrito(prev => [...prev, producto]);
-    // alert(`Producto ${producto.name || producto.nombre} agregado al carrito`);
-    Swal.fire({
-      icon: 'success',
-      title: '¡Éxito!',
-      text: `El producto ${producto.name || producto.nombre} ha sido agregado al carrito.`})
-  }
+  // const agregarAlCarrito = (producto) => {
+  //   setCarrito(prev => [...prev, producto]);
+  //   // alert(`Producto ${producto.name || producto.nombre} agregado al carrito`);
+  //   Swal.fire({
+  //     icon: 'success',
+  //     title: '¡Éxito!',
+  //     text: `El producto ${producto.name || producto.nombre} ha sido agregado al carrito.`})
+  // }
 
 
   const abrirDetalle = (producto) => {
@@ -49,14 +54,20 @@ export default function Productos() {
     setSelectedProducto(null);
   }
 
-  if (cargando) return <p>Cargando productos...</p>;
+  // if (cargando) return <p>Cargando productos...</p>;
+  if (cargando) {
+  return (
+    <div className="loading-container">
+      <div className="spinner"></div>
+      <p className="loading-text">Cargando productos...</p>
+    </div>
+  );
+}
   if (error) return <p>{error}</p>;
 
   return (
     <>
-        <h2>Productos</h2>
-        <p style={{ fontFamily: "Montserrat, sans-serif", marginLeft: 15 }}>Hacé tu compra de lunes a viernes antes de las 12:00 p.m. y recibí tu pedido el mismo día. </p>  
-       
+        <BannerTienda/>
         <ul id="lista-productos">
         {/* {productos.map((producto) => ( */}
           {productos.map((producto, index) => (
@@ -72,12 +83,14 @@ export default function Productos() {
                   {/* <Link to={`/productos/${producto.categoria || 'sin-categoria'}/${producto.id}`} state={{producto}}>
                     <button className="btn btnDetalle">Más detalles</button>
                   </Link> */}
-                  <button className="btn btnEnviar" onClick={() => agregarAlCarrito(producto)}><i className="fa-solid fa-cart-shopping"></i> Comprar</button>
+                  <button className="btn btnEnviar" onClick={() => agregarAlCarrito(producto)}>Agregar al <i className="fa-solid fa-cart-shopping"></i></button>
                 </div>
             </li>
         ))}
         </ul>
         <DetalleModal visible={showModal} producto={selectedProducto} onClose={cerrarDetalle} />
+        {/* <CarritoCompras carrito={carrito} setCarrito={setCarrito} /> */}
+        <CarritoCompras/>
 
     </>
 );

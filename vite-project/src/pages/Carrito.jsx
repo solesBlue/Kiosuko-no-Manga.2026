@@ -1,12 +1,16 @@
-import React from "react";
+import React from 'react';
 import { useNavigate } from "react-router-dom";
+import {useAppContext} from "../context/AppContext";
 
-export default function CarritoCompras({ carrito, setCarrito }) {
+export default function CarritoCompras() {
+  
+  const {carrito, vaciarCarrito,isAuthenticated} = useAppContext();
   const navigate = useNavigate();
 
-  const vaciarCarrito = () => {
-    setCarrito([]);
-  };
+  //Pasa a contecto
+  // const vaciarCarrito = () => {
+  //   setCarrito([]);
+  // };
 
   const irAPagar = () => {
     navigate("/pagar", { state: { carrito } });
